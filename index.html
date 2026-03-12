@@ -1,193 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Uncle!</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Happy Birthday Ate Roda 🎂</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
   <style>
-    /* CSS Styles */
-    body {
-      margin: 0;
-      background: #020202;
-      cursor: crosshair;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #e8607a;
+      --blush: #f7c5cf;
+      --cream: #fff8f0;
+      --gold: #d4a853;
+      --deep: #3b1f2b;
     }
-    canvas {
+
+    html, body {
+      height: 100%;
+      background: var(--cream);
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Floating petals */
+    .petal {
+      position: fixed;
+      width: 10px;
+      height: 14px;
+      border-radius: 80% 0 55% 0;
+      opacity: 0;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Page wrapper */
+    .page {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      z-index: 1;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    /* Header ribbon */
+    .ribbon-top {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 8px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .ribbon-top span {
+      display: inline-block;
+      background: var(--rose);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 20px;
+      border-radius: 2px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 24px 0 8px;
+      animation: fadeDown 0.9s 0.2s ease both;
+    }
+    .hero .emoji-big {
+      font-size: 64px;
+      line-height: 1;
+      display: block;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 4px 12px rgba(232,96,122,0.4));
+      animation: bounce 2.4s 1.2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--rose);
+      line-height: 1.1;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero .subtitle {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--deep);
+      opacity: 0.55;
+      margin-top: 6px;
+    }
+
+    /* Divider */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 20px auto;
+      animation: fadeIn 1s 0.5s both;
+    }
+
+    /* Cards */
+    .cards {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 20px rgba(59,31,43,0.07);
+      border-left: 4px solid var(--rose);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: slideUp 0.6s ease forwards;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: var(--blush);
+      opacity: 0.3;
+    }
+    .card:nth-child(1) { animation-delay: 0.4s; border-color: var(--rose); }
+    .card:nth-child(2) { animation-delay: 0.55s; border-color: var(--gold); }
+    .card:nth-child(3) { animation-delay: 0.7s; border-color: #a0c4a0; }
+    .card:nth-child(4) { animation-delay: 0.85s; border-color: #7cb7d4; }
+    .card:nth-child(5) { animation-delay: 1.0s; border-color: var(--rose); }
+
+    .card .icon {
+      font-size: 22px;
+      margin-bottom: 6px;
       display: block;
     }
-    h1 {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      font-family: "Source Sans Pro";
-      font-size: 5em;
-      font-weight: 900;
-      -webkit-user-select: none;
-      user-select: none;
+    .card p {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--deep);
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+    /* Signature */
+    .signature {
+      margin-top: 30px;
+      text-align: center;
+      animation: fadeIn 1s 1.4s both;
+    }
+    .signature .from-label {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--deep);
+      opacity: 0.45;
+      margin-bottom: 4px;
+    }
+    .signature .from-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    /* Footer hearts */
+    .hearts {
+      margin-top: 28px;
+      font-size: 22px;
+      letter-spacing: 6px;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.7; transform: scale(1.12); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <!-- HTML Content -->
-  <h1>Happy Birthday Uncle!</h1>
-  <canvas id="birthday"></canvas>
 
-  <script>
-    // JavaScript Code
-    // Helper functions
-    const PI2 = Math.PI * 2;
-    const random = (min, max) => Math.random() * (max - min + 1) + min | 0;
-    const timestamp = _ => new Date().getTime();
+<!-- Floating petals -->
+<script>
+  const colors = ['#e8607a','#f7c5cf','#d4a853','#f9a8b8','#fce4ec'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `
+      left: ${Math.random()*100}vw;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${4 + Math.random()*6}s;
+      animation-delay: ${Math.random()*8}s;
+      width: ${8+Math.random()*8}px;
+      height: ${10+Math.random()*10}px;
+      transform: rotate(${Math.random()*360}deg);
+    `;
+    document.body.appendChild(p);
+  }
+</script>
 
-    // Container
-    class Birthday {
-      constructor() {
-        this.resize();
+<div class="page">
 
-        // Create a lovely place to store the fireworks
-        this.fireworks = [];
-        this.counter = 0;
-      }
+  <div class="ribbon-top">
+    <span>✦ With Love ✦</span>
+  </div>
 
-      resize() {
-        this.width = canvas.width = window.innerWidth;
-        let center = this.width / 2 | 0;
-        this.spawnA = center - center / 4 | 0;
-        this.spawnB = center + center / 4 | 0;
+  <div class="hero">
+    <span class="emoji-big">🎂</span>
+    <h1>Happy Birthday<br/><em>Ate Roda!</em></h1>
+    <p class="subtitle">Wishing you the best day ever</p>
+  </div>
 
-        this.height = canvas.height = window.innerHeight;
-        this.spawnC = this.height * .1;
-        this.spawnD = this.height * .5;
-      }
+  <div class="divider"></div>
 
-      onClick(evt) {
-        let x = evt.clientX || evt.touches && evt.touches[0].pageX;
-        let y = evt.clientY || evt.touches && evt.touches[0].pageY;
+  <div class="cards">
 
-        let count = random(3, 5);
-        for (let i = 0; i < count; i++) this.fireworks.push(new Firework(
-          random(this.spawnA, this.spawnB),
-          this.height,
-          x,
-          y,
-          random(0, 260),
-          random(30, 110)
-        ));
+    <div class="card">
+      <span class="icon">🌸</span>
+      <p>May this special day be as warm and beautiful as the love you always share with everyone around you, Ate Roda!</p>
+    </div>
 
-        this.counter = -1;
-      }
+    <div class="card">
+      <span class="icon">✨</span>
+      <p>Wishing you a year filled with endless blessings, good health, and all the happiness your heart can hold.</p>
+    </div>
 
-      update(delta) {
-        ctx.globalCompositeOperation = 'hard-light';
-        ctx.fillStyle = `rgba(20,20,20,${7 * delta})`;
-        ctx.fillRect(0, 0, this.width, this.height);
+    <div class="card">
+      <span class="icon">🌟</span>
+      <p>You deserve every good thing life has to offer. Today, tomorrow, and every single day — you are so loved!</p>
+    </div>
 
-        ctx.globalCompositeOperation = 'lighter';
-        for (let firework of this.fireworks) firework.update(delta);
+    <div class="card">
+      <span class="icon">🎀</span>
+      <p>May God continue to guide your steps and shower you with His grace. Happy, happy birthday, Ate Roda!</p>
+    </div>
 
-        // If enough time passed... create a new firework
-        this.counter += delta * 3; // Each second
-        if (this.counter >= 1) {
-          this.fireworks.push(new Firework(
-            random(this.spawnA, this.spawnB),
-            this.height,
-            random(0, this.width),
-            random(this.spawnC, this.spawnD),
-            random(0, 360),
-            random(30, 110)
-          ));
-          this.counter = 0;
-        }
+    <div class="card">
+      <span class="icon">💐</span>
+      <p>Thank you for being such a wonderful person. Your kindness and smile make every day brighter. Cheers to you!</p>
+    </div>
 
-        // Remove the dead fireworks
-        if (this.fireworks.length > 1000) this.fireworks = this.fireworks.filter(firework => !firework.dead);
-      }
-    }
+  </div>
 
-    class Firework {
-      constructor(x, y, targetX, targetY, shade, offsprings) {
-        this.dead = false;
-        this.offsprings = offsprings;
+  <div class="signature">
+    <p class="from-label">From</p>
+    <p class="from-name">Ate Ber 💕</p>
+  </div>
 
-        this.x = x;
-        this.y = y;
-        this.targetX = targetX;
-        this.targetY = targetY;
+  <div class="hearts">🌹 💖 🌹</div>
 
-        this.shade = shade;
-        this.history = [];
-      }
-
-      update(delta) {
-        if (this.dead) return;
-
-        let xDiff = this.targetX - this.x;
-        let yDiff = this.targetY - this.y;
-        if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3) { // Is still moving
-          this.x += xDiff * 2 * delta;
-          this.y += yDiff * 2 * delta;
-
-          this.history.push({
-            x: this.x,
-            y: this.y
-          });
-
-          if (this.history.length > 20) this.history.shift();
-        } else {
-          if (this.offsprings && !this.madeChilds) {
-            let babies = this.offsprings / 2;
-            for (let i = 0; i < babies; i++) {
-              let targetX = this.x + this.offsprings * Math.cos(PI2 * i / babies) | 0;
-              let targetY = this.y + this.offsprings * Math.sin(PI2 * i / babies) | 0;
-
-              birthday.fireworks.push(new Firework(this.x, this.y, targetX, targetY, this.shade, 0));
-            }
-          }
-          this.madeChilds = true;
-          this.history.shift();
-        }
-
-        if (this.history.length === 0) this.dead = true;
-        else if (this.offsprings) {
-          for (let i = 0; this.history.length > i; i++) {
-            let point = this.history[i];
-            ctx.beginPath();
-            ctx.fillStyle = 'hsl(' + this.shade + ',100%,' + i + '%)';
-            ctx.arc(point.x, point.y, 1, 0, PI2, false);
-            ctx.fill();
-          }
-        } else {
-          ctx.beginPath();
-          ctx.fillStyle = 'hsl(' + this.shade + ',100%,50%)';
-          ctx.arc(this.x, this.y, 1, 0, PI2, false);
-          ctx.fill();
-        }
-      }
-    }
-
-    // Initialize canvas and context
-    let canvas = document.getElementById('birthday');
-    let ctx = canvas.getContext('2d');
-
-    let then = timestamp();
-
-    // Create Birthday instance
-    let birthday = new Birthday();
-    window.onresize = () => birthday.resize();
-    document.onclick = evt => birthday.onClick(evt);
-    document.ontouchstart = evt => birthday.onClick(evt);
-
-    // Animation loop
-    (function loop() {
-      requestAnimationFrame(loop);
-
-      let now = timestamp();
-      let delta = now - then;
-
-      then = now;
-      birthday.update(delta / 1000);
-    })();
-  </script>
+</div>
 </body>
 </html>
